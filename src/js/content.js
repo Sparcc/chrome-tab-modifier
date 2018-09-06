@@ -142,6 +142,24 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 }
             }
             
+            // Handle body_matcher
+            if (rule.tab.body_matcher !== null) {
+                try {
+                    matches = current_body.match(new RegExp(rule.tab.body_matcher), 'g');
+                    
+                    htmlBody = document.body.textContent;
+                    
+                    if (matches !== null) {
+                        for (i = 0; i < matches.length; i++) {
+                            title = updateTitle(, '[BODY]' + i, matches[i]);
+                            title = updateTitle(, '[body]' + i, matches[i]);
+                        }
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            
             return title;
         };
         
