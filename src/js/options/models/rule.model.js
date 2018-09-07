@@ -12,7 +12,8 @@ app.factory('Rule', function () {
             unique: false,
             muted: false,
             title_matcher: null,
-            url_matcher: null
+            url_matcher: null,
+            body_matcher: null
         };
         
         angular.extend(this, properties);

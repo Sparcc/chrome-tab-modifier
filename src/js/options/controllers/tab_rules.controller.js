@@ -205,6 +205,12 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list
         }
     });
     
+    $scope.$watch('rule.tab.body_matcher', function () {
+        if (rule.tab.body_matcher === '' || rule.tab.body_matcher === undefined) {
+            rule.tab.body_matcher = null;
+        }
+    });
+    
     $scope.closeForm = function () {
         $mdDialog.cancel();
     };
