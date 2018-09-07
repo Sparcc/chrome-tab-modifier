@@ -60,19 +60,50 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {string}
          */
         getTextBySelector = function (selector) {
-            var el = document.querySelector(selector), value = '';
-            
+            /*
+            if (selector[0] == '#'){
+                selector = selector.replace(/\./g,"\\\\\\.");
+                //selector = selector.replace("[REPLACE]","\\\\\\.");
+                console.log('ID IS BEING SELECTED');
+            }else{
+                console.log('NORMAL SELECTION');
+            }
+            */
+            var el;
+            if (selector[0] == '#'){
+                el = document.getElementById(selector.replace('#',''));
+                value = el.value;
+            }else{
+            console.log('SELECTOR IS '+selector);
+            el = document.querySelectorAll(selector)[0];
+            value = '';
+            if (el !== null && el.tagName) {
+                console.log('ELEMENT HAS BEEN FOUND');
+                if (el.tagName == 'INPUT'){
+                    console.log('INPUT TAG FOUND');
+                    value = el.value;
+                    console.log('VALUE FOUND');
+                } else if (el.tagName === 'SELECT') {
+                    value = el.options[el.selectedIndex].text;
+                } else {
+                    value = el.innerText || el.textContent;
+                }
+            }else{
+                console.log('ELEMENT NOT FOUND');
+            }}
+            /*
             if (el !== null) {
                 el = el.childNodes[0];
-                
-                if (el.tagName === 'input') {
+                console.log('TAG NAME '+el.tagName);
+                if (el.tagName === 'INPUT') {
                     value = el.value;
-                } else if (el.tagName === 'select') {
+                } else if (el.tagName === 'SELECT') {
                     value = el.options[el.selectedIndex].text;
                 } else {
                     value = el.innerText || el.textContent;
                 }
             }
+            */
             
             return value.trim();
         };
@@ -294,8 +325,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.muted === true) {
             chrome.runtime.sendMessage({ action: 'setMuted' });
         }
+        //processTitle();
+        setTimeout(function() { processTitle(); }, 10000);
+        setTimeout(function() { processTitle(); }, 10000);
     };
-    
     processPage();
     
     // Reverted #39
