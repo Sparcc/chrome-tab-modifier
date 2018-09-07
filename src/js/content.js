@@ -151,8 +151,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
-                            title = updateTitle(, '[BODY]' + i, matches[i]);
-                            title = updateTitle(, '[body]' + i, matches[i]);
+                            title = updateTitle(htmlBody, '[BODY]' + i, matches[i]);
+                            title = updateTitle(htmlBody, '[body]' + i, matches[i]);
                         }
                     }
                 } catch (e) {
